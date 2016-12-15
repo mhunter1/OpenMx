@@ -62,9 +62,7 @@ For state space models (i.e. models with an \link{mxExpectationStateSpace} or \l
 \references{
 The OpenMx User's guide can be found at http://openmx.ssri.psu.edu/documentation.
 }
-
 \examples{
-
 #----------
 # Create data based on state space model.
 require(OpenMx)
@@ -83,22 +81,16 @@ ssModel <- mxModel(model="State Space Manual Example",
     mxExpectationStateSpace("A", "B", "C", "D", "Q", "R", "x0", "P0", "u"),
     mxFitFunctionML()
 )
-
 ssData <- mxGenerateData(ssModel, 200) # 200 time points
-
 # Add simulated data to model
 ssModel <- mxModel(ssModel, mxData(ssData, 'raw'))
-
 # Fit model to simulated data
 ssRun <- mxRun(ssModel)
-
 # Compare parameters estimated from random data to
 #  their true generating values
 cbind(Rand = omxGetParameters(ssRun), Gen = omxGetParameters(ssModel))
 # Note the parameters should be "close" (up to sampling error)
 # to the generating values
-
-
 #----------
 require(OpenMx)
 manifests <- paste("x", 1:5, sep="")
@@ -112,15 +104,11 @@ factorModel <- mxModel("One Factor",
       mxPath(from=latents, arrows=2,
             free=FALSE, values=1.0),
       mxPath(from = 'one', to = manifests))
-
 factorData <- mxGenerateData(factorModel, 100)
-
 factorModel <- mxModel(factorModel,
                        mxData(observed=cov(factorData), type="cov",
                               numObs=nrow(factorData),
                               means = colMeans(factorData)))
 factorRun <- mxRun(factorModel)
 cbind(Rand=omxGetParameters(factorRun), Gen=omxGetParameters(factorModel))
-
-
 }
